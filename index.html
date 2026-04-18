@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +10,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="light-mode">
   <!-- Login Overlay -->
   <div id="login-overlay" class="login-overlay">
     <div class="login-modal">
       <div class="login-header">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="login-logo"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="login-logo">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
         <h2>Welcome Back</h2>
         <p>Log in to access your Daily Flow</p>
       </div>
@@ -41,7 +47,11 @@
     <!-- Navbar -->
     <header class="app-header">
       <div class="logo">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
         <span>Daily Flow</span>
       </div>
       <nav class="main-nav">
@@ -49,10 +59,26 @@
         <button class="nav-btn" data-view="library">Library</button>
       </nav>
       <div class="header-actions" style="display:flex; align-items:center;">
-        <div id="live-clock" style="font-family: monospace; font-size: 1.15rem; font-weight: 600; margin-right: 16px; color: var(--text-primary); letter-spacing: 0.5px;">00:00</div>
+        <div id="live-clock"
+          style="font-family: monospace; font-size: 1.15rem; font-weight: 600; margin-right: 16px; color: var(--text-primary); letter-spacing: 0.5px;">
+          00:00</div>
         <button id="theme-toggle" class="icon-btn" title="Toggle Theme" style="margin-right: 8px;">
-          <svg class="sun-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="sun-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <circle cx="12" cy="12" r="5" />
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
         </button>
         <button id="logout-btn" class="text-btn text-error" title="Logout">Logout</button>
       </div>
@@ -60,17 +86,21 @@
 
     <!-- Main Content Views -->
     <main class="main-content">
-      
+
       <!-- Planner View -->
       <section id="view-planner" class="view-section active">
         <div class="planner-header">
           <div class="date-controls">
             <button id="prev-day-btn" class="icon-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
             </button>
             <h2 id="current-date-display">Today</h2>
             <button id="next-day-btn" class="icon-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
             </button>
             <button id="today-btn" class="text-btn">Return to Today</button>
           </div>
@@ -102,14 +132,22 @@
           <div id="day-slots-list" class="slots-list">
             <!-- Slots injected here via JS -->
           </div>
-          
+
           <div class="add-slot-actions">
             <button id="add-from-library-btn" class="btn primary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <line x1="12" y1="8" x2="12" y2="16" />
+                <line x1="8" y1="12" x2="16" y2="12" />
+              </svg>
               Add from Library
             </button>
             <button id="add-custom-slot-btn" class="btn secondary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="16" />
+                <line x1="8" y1="12" x2="16" y2="12" />
+              </svg>
               Add Custom Slot
             </button>
           </div>
@@ -123,7 +161,7 @@
           <button id="create-template-btn" class="btn primary">New Template</button>
         </div>
         <p class="library-desc">These are reusable slots. Inserting one into a day creates a standalone copy.</p>
-        
+
         <div class="library-grid" id="library-grid">
           <!-- Templates injected here via JS -->
         </div>
@@ -135,7 +173,7 @@
   <!-- Modals -->
   <!-- Modals Overlay -->
   <div id="modal-overlay" class="modal-overlay hidden">
-    
+
     <!-- Custom Slot Modal -->
     <div id="custom-slot-modal" class="modal hidden">
       <div class="modal-header">
@@ -162,12 +200,18 @@
           <div class="form-group">
             <label for="cs-color">Color Identifier</label>
             <div class="color-picker" id="cs-color-picker">
-              <button type="button" class="color-option" data-color="#3b82f6" style="background-color: #3b82f6;"></button>
-              <button type="button" class="color-option" data-color="#ef4444" style="background-color: #ef4444;"></button>
-              <button type="button" class="color-option" data-color="#10b981" style="background-color: #10b981;"></button>
-              <button type="button" class="color-option" data-color="#f59e0b" style="background-color: #f59e0b;"></button>
-              <button type="button" class="color-option" data-color="#8b5cf6" style="background-color: #8b5cf6;"></button>
-              <button type="button" class="color-option" data-color="#6b7280" style="background-color: #6b7280;"></button>
+              <button type="button" class="color-option" data-color="#3b82f6"
+                style="background-color: #3b82f6;"></button>
+              <button type="button" class="color-option" data-color="#ef4444"
+                style="background-color: #ef4444;"></button>
+              <button type="button" class="color-option" data-color="#10b981"
+                style="background-color: #10b981;"></button>
+              <button type="button" class="color-option" data-color="#f59e0b"
+                style="background-color: #f59e0b;"></button>
+              <button type="button" class="color-option" data-color="#8b5cf6"
+                style="background-color: #8b5cf6;"></button>
+              <button type="button" class="color-option" data-color="#6b7280"
+                style="background-color: #6b7280;"></button>
             </div>
             <input type="hidden" id="cs-color" value="#3b82f6">
           </div>
@@ -205,12 +249,18 @@
           <div class="form-group">
             <label for="tp-color">Color Identifier</label>
             <div class="color-picker" id="tp-color-picker">
-              <button type="button" class="color-option" data-color="#3b82f6" style="background-color: #3b82f6;"></button>
-              <button type="button" class="color-option" data-color="#ef4444" style="background-color: #ef4444;"></button>
-              <button type="button" class="color-option" data-color="#10b981" style="background-color: #10b981;"></button>
-              <button type="button" class="color-option" data-color="#f59e0b" style="background-color: #f59e0b;"></button>
-              <button type="button" class="color-option" data-color="#8b5cf6" style="background-color: #8b5cf6;"></button>
-              <button type="button" class="color-option" data-color="#6b7280" style="background-color: #6b7280;"></button>
+              <button type="button" class="color-option" data-color="#3b82f6"
+                style="background-color: #3b82f6;"></button>
+              <button type="button" class="color-option" data-color="#ef4444"
+                style="background-color: #ef4444;"></button>
+              <button type="button" class="color-option" data-color="#10b981"
+                style="background-color: #10b981;"></button>
+              <button type="button" class="color-option" data-color="#f59e0b"
+                style="background-color: #f59e0b;"></button>
+              <button type="button" class="color-option" data-color="#8b5cf6"
+                style="background-color: #8b5cf6;"></button>
+              <button type="button" class="color-option" data-color="#6b7280"
+                style="background-color: #6b7280;"></button>
             </div>
             <input type="hidden" id="tp-color" value="#3b82f6">
           </div>
@@ -246,4 +296,5 @@
   <script src="js/components/planner.js"></script>
   <script src="js/app.js"></script>
 </body>
+
 </html>
