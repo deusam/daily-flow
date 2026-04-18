@@ -23,7 +23,7 @@ async function renderLibrary() {
         <h4>${window.utils.escapeHTML(t.name)}</h4>
       </div>
       <div class="library-card-duration">
-        ${window.utils.formatDuration(t.defaultDurationMinutes)}
+        ${window.utils.formatDuration(t.duration || 0)}
       </div>
       <div class="library-card-actions">
         <button class="icon-btn edit-template-btn" data-id="${t.id}" title="Edit">
@@ -70,13 +70,13 @@ templateForm.addEventListener('submit', async (e) => {
 
   if (id) {
     // update
-    await window.state.updateTemplate(id, { name, defaultDurationMinutes: totalMinutes, color });
+    await window.state.updateTemplate(id, { name, duration: totalMinutes, color });
   } else {
     // create
     await window.state.addTemplate({
       id: window.utils.generateId(),
       name,
-      defaultDurationMinutes: totalMinutes,
+      duration: totalMinutes,
       color
     });
   }
@@ -96,8 +96,8 @@ libraryGrid.addEventListener('click', async (e) => {
     if (template) {
       document.getElementById('tp-id').value = template.id;
       document.getElementById('tp-name').value = template.name;
-      document.getElementById('tp-hours').value = Math.floor(template.defaultDurationMinutes / 60);
-      document.getElementById('tp-minutes').value = template.defaultDurationMinutes % 60;
+      document.getElementById('tp-hours').value = Math.floor((template.duration || 0) / 60);
+      document.getElementById('tp-minutes').value = (template.duration || 0) % 60;
       document.getElementById('tp-color').value = template.color;
       document.getElementById('template-modal-title').innerText = 'Edit Template';
       

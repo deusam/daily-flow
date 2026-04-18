@@ -48,7 +48,7 @@ async function renderPlanner(dateString) {
 
   slots.forEach((slot, index) => {
     const startMins = runningTimeMins;
-    const endMins = startMins + slot.durationMinutes;
+    const endMins = startMins + (slot.duration || 0);
     runningTimeMins = endMins;
     const timeRangeStr = `${window.utils.formatTimeBoundary(startMins)} - ${window.utils.formatTimeBoundary(endMins)}`;
     const el = document.createElement('div');
@@ -58,6 +58,7 @@ async function renderPlanner(dateString) {
     el.dataset.index = index;
 
     const sourceTag = slot.sourceType === 'template' ? 'Library' : 'Custom';
+    const taskNameStr = window.utils.escapeHTML(slot.task_name || slot.name || 'Unnamed');
     
     el.innerHTML = `
       <div class="slot-drag-handle" title="Drag to reorder">
@@ -65,13 +66,13 @@ async function renderPlanner(dateString) {
       </div>
       <div class="slot-color-indicator" style="background-color: ${slot.color}"></div>
       <div class="slot-details" style="flex:1;">
-        <div class="slot-name">${window.utils.escapeHTML(slot.name)}</div>
+        <div class="slot-name">${taskNameStr}</div>
         <div class="slot-meta">
           <span class="slot-tag">${sourceTag}</span>
           <span class="slot-time-range" title="Estimated schedule. Assuming day starts at 00:00" style="font-family:monospace; margin-left:8px; color:var(--text-secondary); background: var(--bg-surface-hover); padding: 2px 6px; border-radius:4px; font-size: 0.8rem; letter-spacing:0.5px;">${timeRangeStr}</span>
         </div>
       </div>
-      <div class="slot-duration">${window.utils.formatDuration(slot.durationMinutes)}</div>
+      <div class="slot-duration">${window.utils.formatDuration(slot.duration || 0)}</div>
       <div class="slot-actions">
         ${slot.sourceType === 'custom' ? `
         <button class="icon-btn save-template-btn" data-id="${slot.id}" title="Save as Template">
@@ -94,7 +95,6 @@ async function renderPlanner(dateString) {
     el.addEventListener('dragstart', (e) => {
       draggedSlotId = slot.id;
       e.dataTransfer.effectAllowed = 'move';
-      // tiny delay to allow class toggle after paint
       setTimeout(() => el.classList.add('dragging'), 0);
     });
 
@@ -180,9 +180,9 @@ plannerSlotsList.addEventListener('click', async (e) => {
     const slot = slots.find(s => s.id === saveTemplateBtn.dataset.id);
     if (slot) {
       document.getElementById('tp-id').value = '';
-      document.getElementById('tp-name').value = slot.name;
-      document.getElementById('tp-hours').value = Math.floor(slot.durationMinutes / 60);
-      document.getElementById('tp-minutes').value = slot.durationMinutes % 60;
+      document.getElementById('tp-name').value = slot.task_name || slot.name;
+      document.getElementById('tp-hours').value = Math.floor((slot.duration || 0) / 60);
+      document.getElementById('tp-minutes').value = (slot.duration || 0) % 60;
       document.getElementById('tp-color').value = slot.color;
       document.getElementById('template-modal-title').innerText = 'Create Template from Custom Slot';
       
@@ -199,9 +199,9 @@ plannerSlotsList.addEventListener('click', async (e) => {
     const slot = slots.find(s => s.id === editBtn.dataset.id);
     if (slot) {
       document.getElementById('cs-id').value = slot.id;
-      document.getElementById('cs-name').value = slot.name;
-      document.getElementById('cs-hours').value = Math.floor(slot.durationMinutes / 60);
-      document.getElementById('cs-minutes').value = slot.durationMinutes % 60;
+      document.getElementById('cs-name').value = slot.task_name || slot.name;
+      document.getElementById('cs-hours').value = Math.floor((slot.duration || 0) / 60);
+      document.getElementById('cs-minutes').value = (slot.duration || 0) % 60;
       document.getElementById('cs-color').value = slot.color;
       document.getElementById('custom-slot-modal-title').innerText = 'Edit Day Slot';
       
@@ -233,8 +233,8 @@ customSlotForm.addEventListener('submit', async e => {
   if (id) {
     // update
     await window.state.updateDaySlot(id, {
-      name,
-      durationMinutes: totalMinutes,
+      task_name: name,
+      duration: totalMinutes,
       color
     });
   } else {
@@ -244,11 +244,10 @@ customSlotForm.addEventListener('submit', async e => {
       date: dateStr,
       sourceType: "custom",
       templateId: null,
-      name,
-      durationMinutes: totalMinutes,
+      task_name: name,
+      duration: totalMinutes,
       color,
-      category: "Uncategorized",
-      orderIndex: 0 // initialized dynamically in state.js
+      category: "Uncategorized"
     };
     await window.state.addSlotToDay(dateStr, newSlot);
   }
@@ -269,7 +268,7 @@ document.getElementById('add-from-library-btn').addEventListener('click', async 
       item.innerHTML = `
         <div class="library-card-color" style="background-color: ${t.color}"></div>
         <div class="font-medium mr-4" style="flex:1; font-weight:600;">${window.utils.escapeHTML(t.name)}</div>
-        <div class="text-sm text-secondary" style="margin-right:24px;">${window.utils.formatDuration(t.defaultDurationMinutes)}</div>
+        <div class="text-sm text-secondary" style="margin-right:24px;">${window.utils.formatDuration(t.duration || 0)}</div>
         <div class="library-select-action" style="color:var(--accent-color);font-weight:600;">+ Add to Day</div>
       `;
       item.addEventListener('click', async () => {
@@ -279,8 +278,8 @@ document.getElementById('add-from-library-btn').addEventListener('click', async 
           date: window.app.activeDateString,
           sourceType: "template",
           templateId: t.id,
-          name: t.name,
-          durationMinutes: t.defaultDurationMinutes,
+          task_name: t.name,
+          duration: t.duration,
           color: t.color,
           category: t.category || "Uncategorized"
         };

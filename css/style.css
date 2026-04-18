@@ -483,7 +483,9 @@ input {
 }
 
 .form-group input[type="text"],
-.form-group input[type="number"] {
+.form-group input[type="number"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid var(--border-color);
@@ -627,4 +629,95 @@ input {
 
 .library-select-item:hover .library-select-action {
   opacity: 1;
+}
+
+/* Login Overlay - Glassmorphism */
+.login-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 100;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.login-overlay.hidden-overlay {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.login-modal {
+  background: rgba(17, 24, 39, 0.75); /* Dark surface */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  color: #f9fafb;
+}
+
+.login-modal .form-group label {
+  color: #d1d5db;
+}
+
+.login-modal input {
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.login-modal input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-logo {
+  color: var(--accent-light);
+  margin-bottom: 16px;
+}
+
+.login-header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.login-header p {
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
+
+.login-actions {
+  margin-top: 24px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.login-footer {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.forgot-link {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.forgot-link:hover {
+  color: var(--accent-color);
 }

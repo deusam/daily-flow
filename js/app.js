@@ -2,12 +2,12 @@
 window.app = {
   currentView: 'planner',
   activeDateString: window.utils.getLocalDateString(new Date()),
-  
+
   openModal(id) {
     document.getElementById('modal-overlay').classList.remove('hidden');
     document.getElementById(id).classList.remove('hidden');
   },
-  
+
   closeModal(id) {
     document.getElementById(id).classList.add('hidden');
     // check if all modals are hidden
@@ -26,7 +26,7 @@ window.app = {
     this.currentView = viewId;
     document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
     document.getElementById(`view-${viewId}`).classList.add('active');
-    
+
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelector(`.nav-btn[data-view="${viewId}"]`).classList.add('active');
 
@@ -58,12 +58,12 @@ window.app = {
 
 // Global Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
-  
+
   // Theme Toggle
   const themeToggle = document.getElementById('theme-toggle');
   const sunIcon = document.querySelector('.sun-icon');
   const moonIcon = document.querySelector('.moon-icon');
-  
+
   function applyTheme(isDark) {
     if (isDark) {
       document.body.classList.add('dark-mode');
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTheme(willBeDark);
     localStorage.setItem('dailyFlowTheme', willBeDark ? 'dark' : 'light');
   });
-  
+
   // Live Clock
   const liveClockEl = document.getElementById('live-clock');
   function updateClock() {
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   setInterval(updateClock, 1000);
   updateClock();
-  
+
   // Navigation
   document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -143,8 +143,15 @@ document.addEventListener('DOMContentLoaded', () => {
     window.app.renderCurrentView();
   });
 
-  // Initial render is slightly delayed to let Dexie seed defaults if needed
-  setTimeout(() => {
+  // Listen for auth state changes
+  window.addEventListener('authStateChanged', () => {
     window.app.renderCurrentView();
-  }, 50);
+  });
+
+  // Initialize Auth Check (this will trigger rendering if logged in, or show overlay)
+  window.auth.checkSession().then(loggedIn => {
+    if (loggedIn) {
+      window.app.renderCurrentView();
+    }
+  });
 });
